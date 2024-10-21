@@ -1,61 +1,98 @@
 const express = require('express');
+const cors = require('cors');
+const { Sequelize } = require('sequelize');
+
+const HomeModel = require('./common/home/HomeModel');
+
+const HomeRoute = require('./common/home/HomeRoute');
 
 const app = express();
 const port = process.env.PORT || 3000;
+const corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200
+};
+
 app.use(express.json());
+app.use(cors(corsOptions));
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+const sequelize = new Sequelize('portfolio', 'root', 'root', {
+    host: 'localhost',
+    dialect: 'mysql'
 });
 
-app.post('/login', (req, res) => {
-    // Login logic
-});
+// Initialize Models
+HomeModel.initialize(sequelize);
 
-app.get('/user', (req, res) => {
-    // Get user logic
-});
+sequelize
+    .sync()
+    .then(() => {
+        // Loading routes
+        app.use('/home', HomeRoute);
 
-app.put('/user', (req, res) => {
-    // Update user logic
-});
+        // Start server
+        app.listen(port, () => {
+            console.log(`Server is running on port ${port}`);
+        });
+    })
+    .catch((error) => {
+        console.error('Error connecting to the database: ', error);
+    });
 
-app.get('/home', (req, res) => {
-    // Home page logic
-});
+// app.listen(port, () => {
+//     console.log(`Server is running on port ${port}`);
+// });
 
-app.post('/home', (req, res) => {
-    // Home page logic
-});
+// app.post('/login', (req, res) => {
+//     // Login logic
+// });
 
-app.put('/home', (req, res) => {
-    // Home page logic
-});
+// app.get('/user', (req, res) => {
+//     // Get user logic
+// });
 
-app.delete('/home', (req, res) => {
-    // Home page logic
-});
+// app.put('/user', (req, res) => {
+//     // Update user logic
+// });
 
-app.get('/projects', (req, res) => {
-    // Projects page logic
-});
+// app.get('/home', (req, res) => {
+//     // Home page logic
+// });
 
-app.post('/projects', (req, res) => {
-    // Projects page logic
-});
+// app.post('/home', cors(corsOptions), (req, res) => {
+//     // Home page logic
+//     console.log(req.body);
+// });
 
-app.put('/projects', (req, res) => {
-    // Projects page logic
-});
+// app.put('/home', (req, res) => {
+//     // Home page logic
+// });
 
-app.delete('/projects', (req, res) => {
-    // Projects page logic
-});
+// app.delete('/home', (req, res) => {
+//     // Home page logic
+// });
 
-app.get('/contact', (req, res) => {
-    // Contact page logic
-});
+// app.get('/projects', (req, res) => {
+//     // Projects page logic
+    
+// });
 
-app.post('/contact', (req, res) => {
-    // Contact page logic
-});
+// app.post('/projects', (req, res) => {
+//     // Projects page logic
+// });
+
+// app.put('/projects', (req, res) => {
+//     // Projects page logic
+// });
+
+// app.delete('/projects', (req, res) => {
+//     // Projects page logic
+// });
+
+// app.get('/contact', (req, res) => {
+//     // Contact page logic
+// });
+
+// app.post('/contact', (req, res) => {
+//     // Contact page logic
+// });

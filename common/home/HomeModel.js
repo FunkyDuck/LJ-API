@@ -1,20 +1,21 @@
-const { Datatypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
+
 const HomeModel = {
     id : {
-        type: Datatypes.INTEGER,
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
     title: {
-        type: Datatypes.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     },
     content: {
-        type: Datatypes.TEXT,
+        type: DataTypes.TEXT,
         allowNull: false
     },
     lang: {
-        type: Datatypes.STRING(2),
+        type: DataTypes.STRING(2),
         allowNull: false,
         defaultValue: 'fr'
     }
@@ -27,7 +28,21 @@ module.exports = {
     createHome: (home) => {
         return this.model.create(home);
     },
-    getAllHome: () => {
+    findAllHome: () => {
         return this.model.findAll();
     },
+    updateHome: (home) => {
+        return this.model.update(home, {
+            where: {
+                id: home.id
+            }
+        });
+    },
+    deleteHome: (home) => {
+        return this.model.destroy({
+            where: {
+                id: home.id
+            }
+        });
+    }
 };
