@@ -1,10 +1,14 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const { Sequelize } = require('sequelize');
 
+// Loading models
 const HomeModel = require('./common/home/HomeModel');
 
+// Loading routes
 const HomeRoute = require('./common/home/HomeRoute');
+const ImageRoute = require('./common/image/ImageRoute');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -13,6 +17,7 @@ const corsOptions = {
     optionsSuccessStatus: 200
 };
 
+app.use(fileUpload());
 app.use(express.json());
 app.use(cors(corsOptions));
 
@@ -29,6 +34,7 @@ sequelize
     .then(() => {
         // Loading routes
         app.use('/home', HomeRoute);
+        app.use('/image', ImageRoute);
 
         // Start server
         app.listen(port, () => {

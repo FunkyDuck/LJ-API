@@ -21,7 +21,9 @@ module.exports = {
             });
     },
     updateHome: (req, res) => {
-        HomeModel.updateHome(req.body)
+        const id = req.params.id;
+
+        HomeModel.updateHome(id, req.body)
             .then((home) => {
                 res.status(200).send(home);
             })
@@ -30,7 +32,9 @@ module.exports = {
             });
     },
     deleteHome: (req, res) => {
-        HomeModel.deleteHome(req.body)
+        const id = req.params.id;
+
+        HomeModel.deleteHome(id)
             .then(() => {
                 res.status(204).send();
             })

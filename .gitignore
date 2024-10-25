@@ -27,3 +27,7 @@ node_modules
 
 # Ignore .yarnrc.yml file
 .yarnrc.yml
+
+# Ignore content in images and files folder in public directory
+public/images/*
+public/files/*

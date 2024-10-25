@@ -4,7 +4,7 @@ const HomeController = require('./HomeController');
 
 router.get('/', HomeController.getAllHome);
 router.post('/', HomeController.createHome);
-router.put('/', HomeController.updateHome);
-router.delete('/', HomeController.deleteHome);
+router.put('/:id', HomeController.updateHome);
+router.delete('/:id', HomeController.deleteHome);
 
 module.exports = router;

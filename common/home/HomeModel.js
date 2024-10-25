@@ -31,17 +31,17 @@ module.exports = {
     findAllHome: () => {
         return this.model.findAll();
     },
-    updateHome: (home) => {
+    updateHome: (id, home) => {
         return this.model.update(home, {
             where: {
-                id: home.id
+                id: id
             }
         });
     },
-    deleteHome: (home) => {
+    deleteHome: (id) => {
         return this.model.destroy({
             where: {
-                id: home.id
+                id: id
             }
         });
     }
