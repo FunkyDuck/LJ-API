@@ -10,20 +10,26 @@ module.exports = {
         if (!req.files) {
             return res.status(400).send('No files were uploaded.');
         }
-        console.info('FILES')
-        console.log(req.files.files)
+        const fs = require('fs');
+        const path = require('path');
+        const crypto = require('crypto');
         const image = req.files.files;
-        console.info('IMAGE');
-        console.log(image);
-        console.info('NAME');
-        console.log(image.name);
-        const root = __dirname.split('common')[0];
+        // Create new filename with an uuid
+        const newFileName = `${crypto.randomUUID()}${path.extname(image.name)}`;
+        const uploadPath = path.join(__dirname.split('common')[0], 'public/images', newFileName);
 
-        const path = root + '/public/images/' + image.name;
-        console.info('PATH');
-        console.log(path);
-        image.mv(path);
-        res.status(201).send('createImage');
+        // Move file to the directory
+        image.mv(uploadPath, (err, result) => {
+            if (err) {
+                return res.status(500).send(err);
+            }
+
+            res.status(201).send({
+                message: 'File uploaded successfully.',
+                filename: newFileName,
+                path: `/public/images/${newFileName}`,
+            });
+        });
     },
     deleteImage: (req, res) => {
         res.status(204).send('deleteImage');
