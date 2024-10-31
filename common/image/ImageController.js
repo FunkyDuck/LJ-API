@@ -24,10 +24,11 @@ module.exports = {
                 return res.status(500).send(err);
             }
 
+            const srv = (req.hostname === 'localhost')? `http://${req.hostname}:3000` : `https://${req.hostname}`;
             res.status(201).send({
                 message: 'File uploaded successfully.',
                 filename: newFileName,
-                path: `/public/images/${newFileName}`,
+                path: `${srv}/public/images/${newFileName}`,
             });
         });
     },

@@ -2,6 +2,7 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const { Sequelize } = require('sequelize');
+const path = require('path');
 
 // Loading models
 const HomeModel = require('./common/home/HomeModel');
@@ -35,6 +36,7 @@ sequelize
         // Loading routes
         app.use('/home', HomeRoute);
         app.use('/image', ImageRoute);
+        app.use('/public/images', express.static(path.join(__dirname, 'public/images')));
 
         // Start server
         app.listen(port, () => {
