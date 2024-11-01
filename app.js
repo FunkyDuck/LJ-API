@@ -9,7 +9,9 @@ const HomeModel = require('./common/home/HomeModel');
 
 // Loading routes
 const HomeRoute = require('./common/home/HomeRoute');
+// Loading routes with upload files
 const ImageRoute = require('./common/image/ImageRoute');
+const FileRoute = require('./common/file/FileRoute');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -36,7 +38,10 @@ sequelize
         // Loading routes
         app.use('/home', HomeRoute);
         app.use('/image', ImageRoute);
+        app.use('/file', FileRoute);
+
         app.use('/public/images', express.static(path.join(__dirname, 'public/images')));
+        app.use('/public/files', express.static(path.join(__dirname, 'public/files')));
 
         // Start server
         app.listen(port, () => {
