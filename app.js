@@ -6,9 +6,12 @@ const path = require('path');
 
 // Loading models
 const HomeModel = require('./common/home/HomeModel');
+const UserModel = require('./common/user/UserModel');
 
 // Loading routes
 const HomeRoute = require('./common/home/HomeRoute');
+const UserRoute = require('./common/user/UserRoute');
+
 // Loading routes with upload files
 const ImageRoute = require('./common/image/ImageRoute');
 const FileRoute = require('./common/file/FileRoute');
@@ -31,6 +34,7 @@ const sequelize = new Sequelize('portfolio', 'root', 'root', {
 
 // Initialize Models
 HomeModel.initialize(sequelize);
+UserModel.initialize(sequelize);
 
 sequelize
     .sync()
@@ -39,6 +43,7 @@ sequelize
         app.use('/home', HomeRoute);
         app.use('/image', ImageRoute);
         app.use('/file', FileRoute);
+        app.use('/user', UserRoute);
 
         app.use('/public/images', express.static(path.join(__dirname, 'public/images')));
         app.use('/public/files', express.static(path.join(__dirname, 'public/files')));
