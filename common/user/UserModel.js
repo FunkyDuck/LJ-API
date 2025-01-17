@@ -12,7 +12,8 @@ const UserModel = {
     },
     email: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     password: {
         type: DataTypes.STRING,
@@ -20,17 +21,27 @@ const UserModel = {
     }
 };
 
+const Scopes = {
+    instanceMethods: {
+        toJSON: function () {
+            const values = { ...this.get() };
+            delete values.password;
+            return values;
+        }
+    }
+}
+
 module.exports = {
     initialize: (sequelize) => {
-        this.model = sequelize.define('user', UserModel);
+        this.model = sequelize.define('user', UserModel, Scopes);
     },
     createUser: (user) => {
         return this.model.create(user);
     },
     findUser: (user) => {
-        return this.model.findAll({
+        return this.model.findOne({
             where: {
-                [Op.or]: [{email: user}, {username: user}],
+                email: user,
             },
         });
     },
@@ -47,5 +58,8 @@ module.exports = {
                 id: id,
             },
         });
-    }
+    },
+    loginUser: (user, password) => {
+        
+    },
 };
