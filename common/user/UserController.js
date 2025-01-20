@@ -3,24 +3,35 @@ const UserModel = require('./UserModel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+const SECRET_KEY = 'MY-KEY';
+
 module.exports = {
     createUser: async (req, res) => {
         let user = req.body;
         user.password = await bcrypt.hash(user.password, 14);
-        if(!UserModel.findUser(user.email)){
+        console.log('::::::::::')
+        console.log(await UserModel.findUser(user.email))
+        console.log('::::::::::')
+        if(await UserModel.findUser(user.email)){
+            res.status(409).send({message: 'email is already in use'});
+        }
+        else {
             UserModel.createUser(req.body)
             .then((user) => {
                 res.status(201).send({
                     message: 'user registered',
-                    user: user
+                    user: {
+                        id: user.id,
+                        username: user.username,
+                        email: user.email,
+                        createdAt: user.createdAt,
+                        updatedAt: user.updatedAt
+                    }
                 });
             })
             .catch((error) => {
                 res.status(500).send(error);
             });
-        }
-        else {
-            res.status(409).send({message: 'email is already in use'});
         }
     },
     login: async (req, res) => {
@@ -35,14 +46,17 @@ module.exports = {
                 console.log('validPassword :: ', validPassword)
 
                 if(validPassword){
-                    // let userClone = {...user.toJson()};
-                    // console.log(userClone)
-                    // delete user.password;
-                    // console.log(userClone)
-                    // TODO :: Create JWT token and send it
+                    let token = await jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '1h' });
                     res.status(200).send({
                         message: 'user connected',
-                        user: user.toJSON()
+                        user: {
+                            id: user.id,
+                            username: user.username,
+                            email: user.email,
+                            createdAt: user.createdAt,
+                            updatedAt: user.updatedAt
+                        },
+                        token: token
                     });
                 }
                 else {

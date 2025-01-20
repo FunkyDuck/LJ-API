@@ -21,19 +21,9 @@ const UserModel = {
     }
 };
 
-const Scopes = {
-    instanceMethods: {
-        toJSON: function () {
-            const values = { ...this.get() };
-            delete values.password;
-            return values;
-        }
-    }
-}
-
 module.exports = {
     initialize: (sequelize) => {
-        this.model = sequelize.define('user', UserModel, Scopes);
+        this.model = sequelize.define('user', UserModel);
     },
     createUser: (user) => {
         return this.model.create(user);
