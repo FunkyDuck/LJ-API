@@ -2,7 +2,7 @@ module.exports = {
     getFile: (req, res) => {
         res.status(200).send();
     },
-    getAll: (req, res) => {
+    getAllFile: (req, res) => {
         res.status(200).send();
     },
     postFile: (req, res) => {
@@ -16,8 +16,6 @@ module.exports = {
         const file = req.files.files;
         // reset filename with sanitize file name
         const newFileName = `${file.name.replace(/[^a-zA-Z0-9_\-.]/g, "_")}`;
-        // Create new filename with an uuid
-        // const newFileName = `${crypto.randomUUID()}${path.extname(image.name)}`;
         const uploadPath = path.join(__dirname.split('common')[0], 'public/files', newFileName);
 
         // Move file to the directory
