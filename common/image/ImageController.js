@@ -3,7 +3,12 @@ module.exports = {
         res.status(200).send('getImage');
     },
     getAllImage: (req, res) => {
-        res.status(200).send('getAllImage');
+        const fs = require('fs');
+        const path = require('path');
+        const folder = path.join(__dirname.split('common')[0], 'public/images');
+        const files = fs.readdirSync(folder);
+
+        res.status(200).send({images: files});
     },
     createImage: (req, res) => {
         // Get image from request and store it in the public folder
