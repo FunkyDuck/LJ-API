@@ -3,7 +3,12 @@ module.exports = {
         res.status(200).send();
     },
     getAllFile: (req, res) => {
-        res.status(200).send();
+        const fs = require('fs');
+        const path = require('path');
+        const folder = path.join(__dirname.split('common')[0], 'public/files');
+        const files = fs.readdirSync(folder);
+
+        res.status(200).send({files: files});
     },
     postFile: (req, res) => {
         // Get file from request and store it in the public folder
