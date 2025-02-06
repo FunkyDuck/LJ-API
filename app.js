@@ -55,9 +55,12 @@ const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
 HomeModel.initialize(sequelize);
 UserModel.initialize(sequelize);
 
+console.log("[BEFORE SEQUELIZE]")
+
 sequelize
     .sync()
     .then(() => {
+        console.log("[THEN SEQUELIZE]")
         // Loading routes
         app.use('/home', HomeRoute);
         app.use('/image', ImageRoute);
