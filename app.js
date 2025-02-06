@@ -57,29 +57,35 @@ UserModel.initialize(sequelize);
 
 console.log("[BEFORE SEQUELIZE]")
 
-sequelize
-    .sync()
+sequelize.authenticate()
     .then(() => {
-        console.log("[THEN SEQUELIZE]")
-        // Loading routes
-        app.use('/home', HomeRoute);
-        app.use('/image', ImageRoute);
-        app.use('/file', FileRoute);
-        app.use('/user', UserRoute);
+        sequelize.sync()
+        .then(() => {
+            console.log("[THEN SEQUELIZE]")
+            // Loading routes
+            app.use('/home', HomeRoute);
+            app.use('/image', ImageRoute);
+            app.use('/file', FileRoute);
+            app.use('/user', UserRoute);
 
-        app.use('/public/images', express.static(path.join(__dirname, 'public/images')));
-        app.use('/public/files', express.static(path.join(__dirname, 'public/files')));
+            app.use('/public/images', express.static(path.join(__dirname, 'public/images')));
+            app.use('/public/files', express.static(path.join(__dirname, 'public/files')));
 
-        // Start server
-        try {
-            app.listen(() => {
-                console.log(`Server is running on port ${port}`);
-            });
-        } catch (error) {
-            console.log("ERR")
-            console.log(error)
-        }
+            // Start server
+            try {
+                app.listen(() => {
+                    console.log(`Server is running on port ${port}`);
+                });
+            } catch (error) {
+                console.log("ERR")
+                console.log(error)
+            }
+        })
+        .catch((error) => {
+            console.error('Error connecting to the database: ', error);
+        });
     })
-    .catch((error) => {
-        console.error('Error connecting to the database: ', error);
+    .catch(err => {
+        console.log("AUTH ERR :: ", err);
     });
+    
