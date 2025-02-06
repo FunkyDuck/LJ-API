@@ -66,9 +66,14 @@ sequelize
         app.use('/public/files', express.static(path.join(__dirname, 'public/files')));
 
         // Start server
-        app.listen(port, () => {
-            console.log(`Server is running on port ${port}`);
-        });
+        try {
+            app.listen(port, () => {
+                console.log(`Server is running on port ${port}`);
+            });
+        } catch (error) {
+            console.log("ERR")
+            console.log(error)
+        }
     })
     .catch((error) => {
         console.error('Error connecting to the database: ', error);
