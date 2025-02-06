@@ -45,6 +45,8 @@ const dbName = process.env.DB_NAME;
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD
 
+console.log(process.env)
+
 console.log("== .ENV ==")
 console.log(dbHost);
 console.log(dbName);
