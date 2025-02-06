@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(cors(corsOptions));
 
 console.log("=====")
-console.log(process.env.USERDOMAIN)
+console.log(process.env.HOST)
 console.log("=====")
 
 // try {
