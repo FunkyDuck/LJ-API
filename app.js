@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
@@ -27,22 +29,15 @@ app.use(fileUpload());
 app.use(express.json());
 app.use(cors(corsOptions));
 
-console.log("=====")
-console.log(process.env.HOST)
-console.log(process.env.BASE_URL)
-console.log("=====")
+const dbHost = process.env.DB_HOST;
+const dbName = process.env.DB_NAME;
+const dbUser = process.env.DB_USER;
+const dbPassword = process.env.DB_PASSWORD
 
-// try {
-//     const sequelize = new Sequelize('portfolio', 'root', 'root', {
-//         host: 'localhost',
-//         dialect: 'mysql'
-//     });
-// } catch (error) {
-//     const sequelize = new Sequelize('portfolio', 'portfolio', 'H4rus4me!', {
-//         host: 'localhost',
-//         dialect: 'mysql'
-//     });
-// }
+const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
+    host: dbHost,
+    dialect: 'mysql'
+});
 
 
 // Initialize Models
