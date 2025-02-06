@@ -69,7 +69,7 @@ sequelize
 
         // Start server
         try {
-            app.listen(port, () => {
+            app.listen(() => {
                 console.log(`Server is running on port ${port}`);
             });
         } catch (error) {
