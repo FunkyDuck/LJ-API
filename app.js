@@ -19,7 +19,7 @@ const ImageRoute = require('./common/image/ImageRoute');
 const FileRoute = require('./common/file/FileRoute');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 const corsOptions = {
     origin: '*',
     optionsSuccessStatus: 200
