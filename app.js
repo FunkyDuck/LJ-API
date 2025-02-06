@@ -29,6 +29,15 @@ app.use(fileUpload());
 app.use(express.json());
 app.use(cors(corsOptions));
 
+console.log("            ______");
+console.log("            _\ _~-\___");
+console.log("    =  = ==(____AA____D");
+console.log("                \_____\___________________,-~~~~~~~`-.._");
+console.log("                /     o O o o o o O O o o o o o o O o  |\_");
+console.log("                `~-.__        ___..----..                  )");
+console.log("                      `---~~\___________/------------`````");
+console.log("                      =  ===(_________D");
+
 const dbHost = process.env.DB_HOST;
 const dbName = process.env.DB_NAME;
 const dbUser = process.env.DB_USER;
