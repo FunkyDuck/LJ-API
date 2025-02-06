@@ -19,7 +19,7 @@ const ImageRoute = require('./common/image/ImageRoute');
 const FileRoute = require('./common/file/FileRoute');
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 const corsOptions = {
     origin: '*',
     optionsSuccessStatus: 200
@@ -44,6 +44,13 @@ const dbHost = process.env.DB_HOST;
 const dbName = process.env.DB_NAME;
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD
+
+console.log("== .ENV ==")
+console.log(dbHost);
+console.log(dbName);
+console.log(dbUser);
+console.log(dbPassword);
+console.log("== .ENV ==")
 
 const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
     host: dbHost,
