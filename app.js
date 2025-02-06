@@ -29,6 +29,8 @@ app.use(fileUpload());
 app.use(express.json());
 app.use(cors(corsOptions));
 
+console.log(`Port ${port} opened`)
+
 console.log("            ______");
 console.log("            _\ _~-\___");
 console.log("    =  = ==(____AA____D");
