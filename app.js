@@ -72,13 +72,13 @@ sequelize.authenticate()
         .then(() => {
             console.log("[THEN SEQUELIZE]")
             // Loading routes
-            app.use('/home', HomeRoute);
-            app.use('/image', ImageRoute);
-            app.use('/file', FileRoute);
-            app.use('/user', UserRoute);
+            app.use('/home', HomeRoute, cors(corsOptions));
+            app.use('/image', ImageRoute, cors(corsOptions));
+            app.use('/file', FileRoute, cors(corsOptions));
+            app.use('/user', UserRoute, cors(corsOptions));
 
-            app.use('/public/images', express.static(path.join(__dirname, 'public/images')));
-            app.use('/public/files', express.static(path.join(__dirname, 'public/files')));
+            app.use('/public/images', express.static(path.join(__dirname, 'public/images')), cors(corsOptions));
+            app.use('/public/files', express.static(path.join(__dirname, 'public/files')), cors(corsOptions));
 
             // Start server
             try {
